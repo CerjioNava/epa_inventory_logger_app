@@ -8,7 +8,6 @@ import reactor.core.publisher.Mono;
 public interface InventoryLogGateway {
 
     Flux<InventoryLog> getAllInventoryLogs(Pageable pageable);
-    Flux<InventoryLog> getAllInventoryLogsByArticleId(String articleId);
     Mono<InventoryLog> saveInventoryLog(InventoryLog inventoryLog);
 
 }

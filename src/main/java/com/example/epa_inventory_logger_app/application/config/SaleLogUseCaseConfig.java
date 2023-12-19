@@ -1,10 +1,7 @@
 package com.example.epa_inventory_logger_app.application.config;
 
 import com.example.epa_inventory_logger_app.domain.model.sale.log.gateway.SaleLogGateway;
-import com.example.epa_inventory_logger_app.domain.usecase.sale.log.GetAllSaleLogsUseCase;
-import com.example.epa_inventory_logger_app.domain.usecase.sale.log.GetRetailSaleLogsUseCase;
-import com.example.epa_inventory_logger_app.domain.usecase.sale.log.GetWholeSaleLogsUseCase;
-import com.example.epa_inventory_logger_app.domain.usecase.sale.log.SaveSaleLogUseCase;
+import com.example.epa_inventory_logger_app.domain.usecase.sale.log.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,6 +21,11 @@ public class SaleLogUseCaseConfig {
     @Bean
     public GetWholeSaleLogsUseCase getWholeSaleLogsUseCase(SaleLogGateway saleLogGateway) {
         return new GetWholeSaleLogsUseCase(saleLogGateway);
+    }
+
+    @Bean
+    public GetAllSaleLogsByArticleIdLogsUseCase getAllSaleLogsByArticleIdLogsUseCase(SaleLogGateway saleLogGateway) {
+        return new GetAllSaleLogsByArticleIdLogsUseCase(saleLogGateway);
     }
 
     @Bean

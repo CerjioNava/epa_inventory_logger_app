@@ -8,4 +8,5 @@ import reactor.core.publisher.Flux;
 public interface SaleLogRepository extends ReactiveMongoRepository<SaleLogData, String> {
     Flux<SaleLogData> findAllBy(Pageable pageable);
     Flux<SaleLogData> findAllBySaleType(String saleType);
+    Flux<SaleLogData> findAllByArticleId(String articleId);
 }

@@ -1,5 +1,6 @@
 package com.example.epa_inventory_logger_app.infrastructure.drivenAdapters.sale.log;
 
+import com.example.epa_inventory_logger_app.domain.model.inventory.log.InventoryLog;
 import com.example.epa_inventory_logger_app.domain.model.sale.log.SaleLog;
 import com.example.epa_inventory_logger_app.domain.model.sale.log.gateway.SaleLogGateway;
 import com.example.epa_inventory_logger_app.infrastructure.drivenAdapters.sale.log.data.SaleLogData;
@@ -36,6 +37,14 @@ public class SaleLogRepositoryAdapter implements SaleLogGateway {
         return repository
                 .findAllBySaleType("WHOLE")
                 .switchIfEmpty(Mono.error(new RuntimeException("Unable to find Whole Sales")))
+                .map(saleLogData -> mapper.map(saleLogData, SaleLog.class));
+    }
+
+    @Override
+    public Flux<SaleLog> getAllSaleLogsByArticleId(String articleId) {
+        return repository
+                .findAllByArticleId(articleId)
+                .switchIfEmpty(Mono.error(new RuntimeException("Unable to find sales by articleId: "+articleId)))
                 .map(saleLogData -> mapper.map(saleLogData, SaleLog.class));
     }
 

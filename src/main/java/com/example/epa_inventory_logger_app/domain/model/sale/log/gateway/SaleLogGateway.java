@@ -10,6 +10,7 @@ public interface SaleLogGateway {
     Flux<SaleLog> getAllSaleLogs(Pageable pageable);
     Flux<SaleLog> getRetailSaleLogs();
     Flux<SaleLog> getWholeSaleLogs();
+    Flux<SaleLog> getAllSaleLogsByArticleId(String articleId);
     Mono<SaleLog> saveSaleLog(SaleLog saleLog);
 
 }
