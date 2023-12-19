@@ -24,7 +24,7 @@ public class InventoryLogRepositoryAdapter implements InventoryLogGateway {
     }
 
     @Override
-    public Flux<InventoryLog> getAllInventoryByArticleId(String articleId) {
+    public Flux<InventoryLog> getAllInventoryLogsByArticleId(String articleId) {
         return repository
                 .findAllByArticleId(articleId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Unable to find by articleId: "+articleId)))
