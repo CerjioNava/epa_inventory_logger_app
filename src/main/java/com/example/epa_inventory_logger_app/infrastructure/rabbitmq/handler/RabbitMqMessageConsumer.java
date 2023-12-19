@@ -1,0 +1,55 @@
+package com.example.epa_inventory_logger_app.infrastructure.rabbitmq.handler;
+
+import com.example.reto_epa_reactive_logger.models.dto.RabbitErrorDTO;
+import com.example.reto_epa_reactive_logger.models.dto.RabbitLogDTO;
+import com.example.reto_epa_reactive_logger.usecase.CreateRabbitErrorUseCase;
+import com.example.reto_epa_reactive_logger.usecase.CreateRabbitLogUseCase;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import reactor.rabbitmq.Receiver;
+
+@Component
+public class RabbitMqMessageConsumer implements CommandLineRunner {
+
+    @Autowired
+    private Receiver receiver;
+
+    @Autowired
+    private Gson gson;
+
+    @Autowired
+    private CreateRabbitErrorUseCase createRabbitErrorUseCase;
+
+    @Autowired
+    private CreateRabbitLogUseCase createRabbitLogUseCase;
+
+    @Override
+    public void run(String... args) throws Exception {
+
+        receiver.consumeAutoAck(System.getenv("QUEUE_NAME_ERROR"))
+                .map(message -> {
+                    RabbitErrorDTO dto = gson
+                            .fromJson(new String(message.getBody()),
+                                    RabbitErrorDTO.class);
+
+                    // Crear log de error en mongo
+                    createRabbitErrorUseCase.accept(dto);
+
+                    return dto;
+                }).subscribe();
+
+        receiver.consumeAutoAck(System.getenv("QUEUE_CLOUDWATCH"))
+                .map(message -> {
+                    RabbitLogDTO dto = gson
+                            .fromJson(new String(message.getBody()),
+                                    RabbitLogDTO.class);
+
+                    // Crear log estandar en mongo
+                    createRabbitLogUseCase.accept(dto);
+
+                    return dto;
+                }).subscribe();
+    }
+}

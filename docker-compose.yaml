@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  applogger:
+    build: .
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    links:
+      - mymongologgerdb
+    env_file:
+      - .env
+    networks:
+      - default
+
+  mymongologgerdb:
+    image: mongo:latest
+    container_name: ${MONGO_CONTAINER}
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    volumes:
+      - mymongologgerdb_data:/data/db
+    networks:
+      - default
+
+  myrabbitmq:
+    image: rabbitmq:3-management
+    container_name: ${RABBIT_CONTAINER}
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+    ports:
+      - "${RABBIT_PORT}:${RABBIT_PORT}"
+      - "${RABBIT_GUI_PORT}:${RABBIT_GUI_PORT}"
+
+volumes:
+  mymongologgerdb_data: { }
+
+networks:
+  default:
+    name: epa_inventory_app_default
+    driver: bridge
