@@ -28,7 +28,7 @@ public class SaleLogRepositoryAdapter implements SaleLogGateway {
         return repository
                 .findAllBySaleType("RETAIL")
                 .switchIfEmpty(Mono.error(new RuntimeException("Unable to find Retail Sales")))
-                .map(saleData -> mapper.map(saleData, SaleLog.class));
+                .map(saleLogData -> mapper.map(saleLogData, SaleLog.class));
     }
 
     @Override
@@ -36,14 +36,14 @@ public class SaleLogRepositoryAdapter implements SaleLogGateway {
         return repository
                 .findAllBySaleType("WHOLE")
                 .switchIfEmpty(Mono.error(new RuntimeException("Unable to find Whole Sales")))
-                .map(saleData -> mapper.map(saleData, SaleLog.class));
+                .map(saleLogData -> mapper.map(saleLogData, SaleLog.class));
     }
 
     @Override
     public Mono<SaleLog> saveSaleLog(SaleLog saleLog) {
         return repository
                 .save(mapper.map(saleLog, SaleLogData.class))
-                .map(SaleLogData -> mapper.map(SaleLogData, SaleLog.class));
+                .map(saleLogData -> mapper.map(saleLogData, SaleLog.class));
     }
 
 }
