@@ -5,7 +5,8 @@ services:
     build: .
     ports:
       - "${APP_PORT}:${APP_PORT}"
-    links:
+    restart: on-failure
+    depends_on:
       - mymongologdb
       - myrabbitmq
     env_file:
