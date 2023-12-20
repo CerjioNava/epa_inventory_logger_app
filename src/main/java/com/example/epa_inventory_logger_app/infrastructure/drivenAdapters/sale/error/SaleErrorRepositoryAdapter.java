@@ -2,7 +2,6 @@ package com.example.epa_inventory_logger_app.infrastructure.drivenAdapters.sale.
 
 import com.example.epa_inventory_logger_app.domain.model.sale.error.SaleError;
 import com.example.epa_inventory_logger_app.domain.model.sale.error.gateway.SaleErrorGateway;
-import com.example.epa_inventory_logger_app.domain.model.sale.log.SaleLog;
 import com.example.epa_inventory_logger_app.infrastructure.drivenAdapters.sale.error.data.SaleErrorData;
 import lombok.RequiredArgsConstructor;
 import org.reactivecommons.utils.ObjectMapper;

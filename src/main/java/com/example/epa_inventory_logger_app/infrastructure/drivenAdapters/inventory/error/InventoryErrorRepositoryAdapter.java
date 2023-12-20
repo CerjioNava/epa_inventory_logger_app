@@ -17,7 +17,6 @@ public class InventoryErrorRepositoryAdapter implements InventoryErrorGateway {
     private final InventoryErrorRepository repository;
     private final ObjectMapper mapper;
 
-
     @Override
     public Flux<InventoryError> getAllInventoryErrors(Pageable pageable) {
         return repository

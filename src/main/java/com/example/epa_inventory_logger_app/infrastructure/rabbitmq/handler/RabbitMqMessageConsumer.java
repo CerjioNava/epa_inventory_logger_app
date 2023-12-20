@@ -15,6 +15,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import reactor.rabbitmq.Receiver;
 
+import java.util.Date;
+
 @Component
 @RequiredArgsConstructor
 public class RabbitMqMessageConsumer implements CommandLineRunner {
@@ -64,7 +66,7 @@ public class RabbitMqMessageConsumer implements CommandLineRunner {
                             .fromJson(new String(message.getBody()),
                                     InventoryError.class);
 
-                    saveInventoryErrorUseCase.apply(error);
+                    saveInventoryErrorUseCase.apply(error).subscribe();
 
                     return error;
                 }).subscribe();
@@ -75,7 +77,7 @@ public class RabbitMqMessageConsumer implements CommandLineRunner {
                             .fromJson(new String(message.getBody()),
                                     InventoryLog.class);
 
-                    saveInventoryLogUseCase.apply(log);
+                    saveInventoryLogUseCase.apply(log).subscribe();
 
                     return log;
                 }).subscribe();
