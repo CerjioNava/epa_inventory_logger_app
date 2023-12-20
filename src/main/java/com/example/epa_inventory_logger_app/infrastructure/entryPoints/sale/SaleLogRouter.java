@@ -65,7 +65,7 @@ public class SaleLogRouter {
     @Bean
     public RouterFunction<ServerResponse> getRetailSaleLogs(GetRetailSaleLogsUseCase getRetailSaleLogsUseCase) {
         return route(
-                GET("/api/sale/log/retail"),
+                GET("/api/sale/retail"),
                 request -> ServerResponse
                         .ok()
                         .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +81,7 @@ public class SaleLogRouter {
     @Bean
     public RouterFunction<ServerResponse> getWholeSaleLogs(GetWholeSaleLogsUseCase getWholeSaleLogsUseCase) {
         return route(
-                GET("/api/sale/log/whole"),
+                GET("/api/sale/whole"),
                 request -> ServerResponse
                         .ok()
                         .contentType(MediaType.APPLICATION_JSON)
